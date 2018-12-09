@@ -1,0 +1,82 @@
+{
+  "name": "stdcp",
+  "version": "1.0.0",
+  "description": "An effort to encapsulate the output code page used by the console of current process.",
+  "keywords": [
+    "SetConsoleOutputCP",
+    "GetConsoleOutputCP",
+    "chcp",
+    "console",
+    "terminal",
+    "codepage",
+    "code-page",
+    "code",
+    "page",
+    "encoding",
+    "charset",
+    "character"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/gucong3000/stdcp#readme",
+  "author": "gucong3000",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gucong3000/stdcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gucong3000/stdcp/issues"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "node-pre-gyp": "^0.12.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/register": "^7.0.0",
+    "codecov": "^3.1.0",
+    "eclint": "^2.8.1",
+    "eslint": "^5.10.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "expect.js": "^0.3.1",
+    "fs-extra": "^7.0.1",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0"
+  },
+  "binary": {
+    "module_name": "stdcp",
+    "module_path": "./build/Release/binding/{node_abi}-{platform}-{arch}",
+    "package_name": "{node_abi}-{platform}-{arch}.tar.gz",
+    "host": "https://github.com/gucong3000/stdcp/releases/download/",
+    "remote_path": "v{version}"
+  },
+  "nyc": {
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "cache": true
+  },
+  "scripts": {
+    "install": "node-pre-gyp install --fallback-to-build || echo fallback",
+    "build": "rm -rf lib && babel src --out-dir lib && node-pre-gyp rebuild --build-from-source && node-pre-gyp package",
+    "prepare": "npm run build",
+    "unit": "nyc mocha --no-timeouts",
+    "lint:eclint": "eclint check $(git ls-files | tee /tmp/git-files)",
+    "lint:eslint": "eslint $(grep \"\\.js$\" /tmp/git-files)",
+    "lint": "npm run lint:eclint && npm run lint:eslint",
+    "pretest": "env npm run lint --script-shell=/bin/sh",
+    "test": "npm run unit",
+    "report-coverage": "codecov"
+  },
+  "gypfile": true,
+  "os": [
+    "win32"
+  ]
+}
