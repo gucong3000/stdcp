@@ -1,6 +1,6 @@
 {
   "name": "stdcp",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "An effort to encapsulate the output code page used by the console of current process.",
   "keywords": [
     "GetACP",

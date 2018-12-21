@@ -5,7 +5,7 @@
 *.tgz
 .circleci
 .editorconfig
-.babelrc
+.babelrc*
 .eslintrc*
 .gitignore
 .grunt
