@@ -84,5 +84,7 @@ typings/
 
 # End of https://www.gitignore.io/api/node
 
-build
-lib
+*.tar.gz
+build-tmp-napi-*/
+build/
+lib/

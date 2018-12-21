@@ -8,15 +8,28 @@ stdcp
 An effort to encapsulate the output code page used by the console of current process.
 
 This library provides native bindings for Windows APIs:
-- [SetConsoleOutputCP](https://docs.microsoft.com/windows/console/setconsoleoutputcp)
+- [GetACP](https://docs.microsoft.com/windows/desktop/api/winnls/nf-winnls-getacp)
 - [GetConsoleOutputCP](https://docs.microsoft.com/windows/console/getconsoleoutputcp)
+- [SetConsoleOutputCP](https://docs.microsoft.com/windows/console/setconsoleoutputcp)
 
 ## Use Case
 
 ```javascript
 const stdcp = require("stdcp");
-stdcp.set(65001);
-console.log(stdcp.get())  // 65001
+
+// Asynchronously APIs
+(async () => {
+  console.log(await stdcp.get(true))  // Get current Windows code page.
+  console.log(await stdcp.get())      // Get code page for current console.
+  await stdcp.set(65001);             // Set code page for current console.
+})();
+
+// Synchronously APIs
+(() => {
+  console.log(stdcp.getSync(true))  // Get current Windows code page.
+  console.log(stdcp.getSync())      // Get code page for current console.
+  stdcp.setSync(65001)              // Set code page for current console.
+})();
 ```
 
 ## Related

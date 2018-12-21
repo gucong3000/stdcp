@@ -1,6 +1,7 @@
 *.log
 *.pid
 *.seed
+*.tar.gz
 *.tgz
 .circleci
 .editorconfig
@@ -24,4 +25,7 @@ npm-debug.log*
 pids
 test
 src/*.js
-build
+build/
+build-tmp-napi-*/
+lib/binding/**/*
+!lib/binding/win32-x64-napi-v3/stdcp.node

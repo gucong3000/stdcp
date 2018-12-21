@@ -6,7 +6,6 @@ environment:
   matrix:
     - nodejs_version: current
     - nodejs_version: lts
-    - nodejs_version: 8
     - nodejs_version: 6
 
 platform:
@@ -18,19 +17,20 @@ install:
   # install Node.js
   - ps: Install-Product node $env:nodejs_version $env:platform
   # install modules
-  - npm install --build-from-source
+  - if %nodejs_version% LSS 8 npm i -g npm@6
+  - npm install --build-from-source=stdcp
 
 # to run your custom scripts instead of automatic tests
 test_script:
-  - if not %nodejs_version% LSS 8 npm test
-  - npm run build
+  - npm test
+  - if "%nodejs_version%"=="lts" npm run build
 
 # to run your custom scripts instead of provider deployments
 after_test:
   - if not %nodejs_version% LSS 8 npm run report-coverage
 
 artifacts:
-  - path: 'build\stage\**\*.tar.gz'
+  - path: '**\*.tar.gz'
     name: binding
 
 deploy:
